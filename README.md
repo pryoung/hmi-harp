@@ -4,6 +4,10 @@
 
 https://pyoung.org/quick_guides/hmi_harp_data.html
 
+http://jsoc.stanford.edu/HMI/HARPS.html
+
+[Hoeksama et al. (2014, Solar Physics, 289, 3483)](https://link.springer.com/article/10.1007/s11207-014-0516-8)
+
 ## Getting started
 
 Create the  environment variables $HMI_HARP, $HMI_SHARP and $HMI_SHARP_CEA for storing HARP, SHARP and SHARP-CEA datasets. For example, I have the following lines in my idl_startup.pro file:
@@ -45,3 +49,19 @@ IDL> help,data,/str
    NACR            LONG      Array[1481]
    RADIAL_FLUX     FLOAT     Array[1481]
 ```
+
+## SHARP data
+
+The HMI SHARP datasets consist of various parameter maps of the HARP as it rotates across the solar disk.  The maps can be downloaded from the JSOC [ExportPage](http://jsoc.stanford.edu/ajax/exportdata.html) site by inputting a RecordSet such as:
+
+```
+hmi.sharp_cea_720s[7260][2018.05.21_00:00/10d@1d]
+```
+
+which downloads the CEA files for HARP 7260. The time specification requests the files at 00:00 UT from 21-May at 1 day intervals. If you just want the Br, conf_disambig and bitmap files (needed for computing the unsigned magnetic flux), the RecordSet would be:
+
+```
+hmi.sharp_cea_720s[7260][2018.05.21_00:00/10d@1d]{Br,conf_disambig,bitmap}
+```
+
+If you want the original pixel data rather than CEA data, then just drop "_cea" from the RecordSet.
